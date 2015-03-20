@@ -70,7 +70,7 @@ if [[ ! -d "$DOKKU_ROOT/.mongodb" ]]; then
 
   chown -R dokku: "$DOKKU_ROOT/.mongodb"
 
-  id=$(docker run -p 27017 -d -v "$DOKKU_ROOT/.mongodb/data":/tmp/mongo "$db_image" /usr/bin/mongod --dbpath=/tmp/mongo)
+  id=$(sudo docker run -p 27017 -d -v "$DOKKU_ROOT/.mongodb/data":/tmp/mongo "$db_image" /usr/bin/mongod --dbpath=/tmp/mongo --smallfiles)
   mongodb_ip=$(docker port ${id} 27017 | awk '{split($0,a,":"); print a[1]}')
   mongodb_port=$(docker port ${id} 27017 | awk '{split($0,a,":"); print a[2]}')
   if [[ $mongodb_ip = "0.0.0.0" ]]; then
